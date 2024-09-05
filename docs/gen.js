@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const canvas = document.getElementById("polygon");
-    const ctx = canvas.getContext("2d");
+    const polygonCanvas = document.getElementById("polygon");
+    const polygonCtx = polygonCanvas.getContext("2d");
+    const rulerCanvas = document.getElementById("ruler");
+    const rulerCtx = rulerCanvas.getContext("2d");
 
     // Set canvas dimensions based on the image
     const image = document.querySelector(".image-canvas-container img");
-    canvas.width = image.clientWidth;
-    canvas.height = image.clientHeight;
+    polygonCanvas.width = image.clientWidth;
+    polygonCanvas.height = image.clientHeight;
+    rulerCanvas.width = image.clientWidth;
+    rulerCanvas.height = image.clientHeight;
 
     // Sliders for the radar chart
     const sliders = {
@@ -38,43 +42,47 @@ document.addEventListener("DOMContentLoaded", function() {
         "defense"
     ];
 
-    // Draw the radar chart
-    function drawRadarChart() {
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
+    // Draw the radar chart and the ruler
+    function draw() {
+        const centerX = polygonCanvas.width / 2;
+        const centerY = polygonCanvas.height / 2;
         const radius = Math.min(centerX, centerY) * 0.67;
         const angleStep = (2 * Math.PI) / attributes.length;
 
-        // Clear the canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Clear both canvases
+        polygonCtx.clearRect(0, 0, polygonCanvas.width, polygonCanvas.height);
+        rulerCtx.clearRect(0, 0, rulerCanvas.width, rulerCanvas.height);
 
         // Get current slider values
         const values = attributes.map(attr => parseFloat(sliders[attr].value) / 100);
+
+        // Calculate total percentage for the ruler
+        const totalPercentage = values.reduce((sum, value) => sum + value, 0) * 10;
 
         // Get color and transparency
         const color = colorInput.value;
         const transparency = parseFloat(transparencyInput.value) / 100;
 
         // Set the polygon fill style
-        ctx.fillStyle = hexToRGBA(color, transparency);
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
+        polygonCtx.fillStyle = hexToRGBA(color, transparency);
+        polygonCtx.strokeStyle = color;
+        polygonCtx.lineWidth = 2;
 
         // Save the current context before applying transformations
-        ctx.save();
+        polygonCtx.save();
 
         // Translate to the center of the canvas
-        ctx.translate(centerX, centerY);
+        polygonCtx.translate(centerX, centerY);
 
         // Rotate the canvas
         const rotationAngle = Math.PI / 2;
-        ctx.rotate(rotationAngle);
+        polygonCtx.rotate(rotationAngle);
 
         // Translate back to the original position
-        ctx.translate(-centerX, -centerY);
+        polygonCtx.translate(-centerX, -centerY);
 
         // Start drawing the radar chart polygon
-        ctx.beginPath();
+        polygonCtx.beginPath();
         for (let i = 0; i < attributes.length; i++) {
             const value = values[i];
             const angle = i * angleStep - Math.PI / 2;
@@ -82,17 +90,32 @@ document.addEventListener("DOMContentLoaded", function() {
             const y = centerY + radius * value * Math.sin(angle);
 
             if (i === 0) {
-                ctx.moveTo(x, y);
+                polygonCtx.moveTo(x, y);
             } else {
-                ctx.lineTo(x, y);
+                polygonCtx.lineTo(x, y);
             }
         }
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
+        polygonCtx.closePath();
+        polygonCtx.fill();
+        polygonCtx.stroke();
 
         // Restore the context to avoid affecting other drawings
-        ctx.restore();
+        polygonCtx.restore();
+
+        // Draw the ruler based on the total percentage
+        drawRuler(totalPercentage, color, transparency);
+    }
+
+    // Draw the ruler
+    function drawRuler(percentage, color, transparency) {
+        const rulerHeight = rulerCanvas.height;
+        const filledHeight = (rulerHeight * percentage) / 100;
+
+        // Set fill style for the ruler
+        rulerCtx.fillStyle = hexToRGBA(color, transparency);
+
+        // Draw the filled part of the ruler
+        rulerCtx.fillRect(0, rulerHeight - filledHeight, rulerCanvas.width, filledHeight);
     }
 
     // Convert hex color to RGBA format
@@ -104,11 +127,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Attach event listeners to sliders and inputs
-    Object.values(sliders).forEach(slider => slider.addEventListener("input", drawRadarChart));
-
-    colorInput.addEventListener("input", drawRadarChart);
-    transparencyInput.addEventListener("input", drawRadarChart);
+    Object.values(sliders).forEach(slider => slider.addEventListener("input", draw));
+    colorInput.addEventListener("input", draw);
+    transparencyInput.addEventListener("input", draw);
 
     // Initial draw
-    drawRadarChart();
+    draw();
 });

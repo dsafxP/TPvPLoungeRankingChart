@@ -15,9 +15,19 @@
         <h1 class="text-center">Terraria PvP Lounge Ranking Chart</h1>
     </div>
 
-    <div class="image-canvas-container position-relative">
-        <img src="chart.png" alt="Chart" class="img-fluid">
-        <canvas id="polygon" class="canvas-overlay position-absolute"></canvas>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <div class="image-canvas-container position-relative">
+                <img src="chart.png" alt="Chart" class="img-fluid img-chart">
+                <canvas id="polygon" class="canvas-overlay position-absolute"></canvas>
+            </div>
+        </div>
+        <div class="col-auto">
+            <div class="image-canvas-container position-relative">
+                <img src="ruler.png" alt="Ruler" class="img-fluid img-chart" style="position: relative; z-index: 2;">
+                <canvas id="ruler" class="canvas-overlay position-absolute" style="z-index: 1;"></canvas>
+            </div>
+        </div>
     </div>
 
     <!-- Sliders Section -->
