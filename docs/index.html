@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terraria PvP Lounge Ranking Chart</title>
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body class="bg-light text-dark">
+    <div class="container mt-5">
+        <h1 class="text-center">Terraria PvP Lounge Ranking Chart</h1>
+    </div>
+
+    <div class="image-canvas-container position-relative">
+        <img src="chart.png" alt="Chart" class="img-fluid">
+        <canvas id="polygon" class="canvas-overlay position-absolute"></canvas>
+    </div>
+
+    <!-- Sliders Section -->
+    <div class="sliders-section mt-5 mx-5">
+        <h2 class="text-center">Adjust</h2>
+        <div class="row">
+            <!-- Main Sliders -->
+            <div class="col-md-6">
+                <div class="slider-container">
+                    <label for="aimTracking">Aim & Tracking</label>
+                    <input type="range" class="form-range" id="aimTracking">
+                </div>
+
+                <div class="slider-container">
+                    <label for="swappingReflexes">Swapping & Reflexes</label>
+                    <input type="range" class="form-range" id="swappingReflexes">
+                </div>
+
+                <div class="slider-container">
+                    <label for="movementPositioning">Movement & Positioning</label>
+                    <input type="range" class="form-range" id="movementPositioning">
+                </div>
+
+                <div class="slider-container">
+                    <label for="gameSense">Game Sense</label>
+                    <input type="range" class="form-range" id="gameSense">
+                </div>
+
+                <div class="slider-container">
+                    <label for="consistency">Consistency</label>
+                    <input type="range" class="form-range" id="consistency">
+                </div>
+
+                <div class="slider-container">
+                    <label for="longRange">Long Range</label>
+                    <input type="range" class="form-range" id="longRange">
+                </div>
+
+                <div class="slider-container">
+                    <label for="midRange">Mid Range</label>
+                    <input type="range" class="form-range" id="midRange">
+                </div>
+
+                <div class="slider-container">
+                    <label for="closeRange">Close Range</label>
+                    <input type="range" class="form-range" id="closeRange">
+                </div>
+
+                <div class="slider-container">
+                    <label for="aggression">Aggression</label>
+                    <input type="range" class="form-range" id="aggression">
+                </div>
+
+                <div class="slider-container">
+                    <label for="defense">Defense</label>
+                    <input type="range" class="form-range" id="defense">
+                </div>
+                <!-- Add more sliders as needed -->
+            </div>
+
+            <!-- Misc Sliders -->
+            <div class="col-md-6" style="padding: 0 15 px;">
+                <div>
+                    <label for="colorSelector">Color</label>
+                    <input type="color" class="form-control form-control-color" id="colorSelector" value="#ff0000">
+                </div>
+
+                <div class="mt-3">
+                    <label for="transparency">Transparency</label>
+                    <input type="range" class="form-range" id="transparency" min="0" max="100" value="50">
+                </div>
+                <!-- Add more misc sliders as needed -->
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="gen.js"></script>
+</body>
+
+</html>
