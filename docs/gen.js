@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function draw() {
         const centerX = polygonCanvas.width / 2;
         const centerY = polygonCanvas.height / 2;
-        const radius = Math.min(centerX, centerY) * 0.67;
+        const radius = Math.min(centerX, centerY) * 0.69;
         const angleStep = (2 * Math.PI) / attributes.length;
 
         // Clear both canvases
