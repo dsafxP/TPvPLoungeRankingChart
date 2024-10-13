@@ -1,4 +1,5 @@
-const ctx = document.getElementById('radarChart').getContext('2d');
+const canvas = document.getElementById('radarChart')
+const ctx = canvas.getContext('2d');
 
 // Sliders for the radar chart
 const sliders = {
@@ -82,7 +83,7 @@ function updateChart() {
     const transparency = transparencyInput.value;
 
     const backgroundColor = tinycolor(color).setAlpha(transparency).toRgbString();
-    const borderColor = tinycolor(color).toHexString();  // Ensure full color for the border
+    const borderColor = tinycolor(color).toHexString(); // Ensure full color for the border
 
     // Update the chart data and appearance
     radarChart.data.datasets[0].data = dataValues;
@@ -91,4 +92,26 @@ function updateChart() {
 
     // Redraw the chart
     radarChart.update();
+}
+
+async function copyChart() {
+    try {
+        // Get the data URL of the canvas
+        const dataUrl = radarChart.canvas.toDataURL('image/png');
+
+        // Fetch the image data as a blob
+        const response = await fetch(dataUrl);
+        const blob = await response.blob();
+
+        // Create a clipboard item
+        const item = new ClipboardItem({
+            'image/png': blob
+        });
+
+        // Write the clipboard item to the clipboard
+        await navigator.clipboard.write([item]);
+        alert('Chart copied to clipboard!');
+    } catch (err) {
+        console.error('Failed to copy: ', err);
+    }
 }
