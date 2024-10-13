@@ -14,19 +14,11 @@
     <div class="container mt-5">
         <h1 class="text-center">Terraria PvP Lounge Ranking Chart</h1>
     </div>
+    
 
-    <div class="row justify-content-center">
-        <div class="col-auto">
-            <div class="image-canvas-container position-relative">
-                <img src="chart.png" alt="Chart" class="img-fluid img-chart">
-                <canvas id="polygon" class="canvas-overlay position-absolute"></canvas>
-            </div>
-        </div>
-        <div class="col-auto">
-            <div class="image-canvas-container position-relative">
-                <img src="ruler.png" alt="Ruler" class="img-fluid img-chart" style="position: relative; z-index: 2;">
-                <canvas id="ruler" class="canvas-overlay position-absolute" style="z-index: 1;"></canvas>
-            </div>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center">
+            <canvas id="radarChart"></canvas>
         </div>
     </div>
 
@@ -38,62 +30,52 @@
             <div class="col-md-6">
                 <div class="slider-container">
                     <label for="aimTracking">Aim & Tracking</label>
-                    <input type="range" class="form-range" id="aimTracking" oninput="updateSliderValue(this, 'aimTrackingValue')">
-                    <span id="aimTrackingValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="aimTracking">
                 </div>
 
                 <div class="slider-container">
                     <label for="swappingReflexes">Swapping & Reflexes</label>
-                    <input type="range" class="form-range" id="swappingReflexes" oninput="updateSliderValue(this, 'swappingReflexesValue')">
-                    <span id="swappingReflexesValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="swappingReflexes">
                 </div>
 
                 <div class="slider-container">
                     <label for="movementPositioning">Movement & Positioning</label>
-                    <input type="range" class="form-range" id="movementPositioning" oninput="updateSliderValue(this, 'movementPositioningValue')">
-                    <span id="movementPositioningValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="movementPositioning">
                 </div>
 
                 <div class="slider-container">
                     <label for="gameSense">Game Sense</label>
-                    <input type="range" class="form-range" id="gameSense" oninput="updateSliderValue(this, 'gameSenseValue')">
-                    <span id="gameSenseValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="gameSense">
                 </div>
 
                 <div class="slider-container">
                     <label for="consistency">Consistency</label>
-                    <input type="range" class="form-range" id="consistency" oninput="updateSliderValue(this, 'consistencyValue')">
-                    <span id="consistencyValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="consistency">
                 </div>
 
                 <div class="slider-container">
                     <label for="longRange">Long Range</label>
-                    <input type="range" class="form-range" id="longRange" oninput="updateSliderValue(this, 'longRangeValue')">
-                    <span id="longRangeValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="longRange">
                 </div>
 
                 <div class="slider-container">
                     <label for="midRange">Mid Range</label>
-                    <input type="range" class="form-range" id="midRange" oninput="updateSliderValue(this, 'midRangeValue')">
-                    <span id="midRangeValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="midRange">
                 </div>
 
                 <div class="slider-container">
                     <label for="closeRange">Close Range</label>
-                    <input type="range" class="form-range" id="closeRange" oninput="updateSliderValue(this, 'closeRangeValue')">
-                    <span id="closeRangeValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="closeRange">
                 </div>
 
                 <div class="slider-container">
                     <label for="aggression">Aggression</label>
-                    <input type="range" class="form-range" id="aggression" oninput="updateSliderValue(this, 'aggressionValue')">
-                    <span id="aggressionValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="aggression">
                 </div>
 
                 <div class="slider-container">
                     <label for="defense">Defense</label>
-                    <input type="range" class="form-range" id="defense" oninput="updateSliderValue(this, 'defenseValue')">
-                    <span id="defenseValue" class="slider-value">50</span>
+                    <input type="range" class="form-range" id="defense">
                 </div>
                 <!-- Add more sliders as needed -->
             </div>
@@ -107,12 +89,7 @@
 
                 <div class="mt-3">
                     <label for="transparency">Transparency</label>
-                    <input type="range" class="form-range" id="transparency">
-                </div>
-                
-                <div class="mt-3">
-                    <label for="details">Details</label>
-                    <input type="checkbox" class="form-check" id="details" onclick="toggleSliderValues()">
+                    <input type="range" class="form-range" id="transparency" min="0" max="1" step="0.01" value="0.25">
                 </div>
                 <!-- Add more misc sliders as needed -->
             </div>
@@ -123,9 +100,19 @@
     <div class="container text-center mt-5">
         Made with 💚 by <a href="https://github.com/dsafxP/">dsafxP</a>
     </div>
-
-    <script src="details.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js"></script>
     <script src="gen.js"></script>
+    <script>
+        // Attach event listeners to sliders and inputs
+        Object.values(sliders).forEach(slider => slider.addEventListener("input", updateChart));
+        colorInput.addEventListener("input", updateChart);
+        transparencyInput.addEventListener("input", updateChart);
+
+       // Initial update
+       updateChart();
+    </script>
 </body>
 
 </html>
