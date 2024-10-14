@@ -191,6 +191,22 @@ function getParamsFromUrl() {
     }
 }
 
+function resetChart() {
+    // Set slider values
+    Object.keys(sliders).forEach(key => {
+        sliders[key].value = 50;
+    });
+
+    // Set color and transparency values
+    colorInput.value = "#ff0000";
+
+    transparencyInput.value = 0.25;
+    
+    updateChart();
+    
+    alert('Reset chart.');
+}
+
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(function() {
         alert('URL copied to clipboard!');
