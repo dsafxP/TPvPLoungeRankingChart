@@ -56,6 +56,11 @@ let radarChart = new Chart(ctx, {
     options: {
         scale: {
             r: {
+                pointLabels: {
+                    font: {
+                        weight: 'bold'
+                    }
+                },
                 suggestedMin: 0,
                 suggestedMax: 100
             }
