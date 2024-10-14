@@ -118,8 +118,6 @@ let radarChart = new Chart(ctx, {
                 sliders.aggression.value,
                 sliders.defense.value
             ],
-            backgroundColor: tinycolor("#ff0000").setAlpha(0.25).toRgbString(),
-            borderColor: '#ff0000',
             borderWidth: 2,
         }]
     },
@@ -156,6 +154,49 @@ function updateChart() {
 
     // Redraw the chart
     radarChart.update();
+}
+
+function generateShareUrl() {
+    const params = new URLSearchParams();
+
+    // Add slider values
+    Object.keys(sliders).forEach(key => {
+        params.append(key, sliders[key].value);
+    });
+
+    // Add color and transparency values
+    params.append('color', colorInput.value);
+    params.append('transparency', transparencyInput.value);
+
+    // Generate the shareable URL
+    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+}
+
+function getParamsFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+
+    // Set slider values
+    Object.keys(sliders).forEach(key => {
+        if (params.has(key)) {
+            sliders[key].value = params.get(key);
+        }
+    });
+
+    // Set color and transparency values
+    if (params.has('color')) {
+        colorInput.value = params.get('color');
+    }
+    if (params.has('transparency')) {
+        transparencyInput.value = params.get('transparency');
+    }
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('URL copied to clipboard!');
+    }, function(err) {
+        console.error('Failed to copy: ', err);
+    });
 }
 
 async function copyChart() {
