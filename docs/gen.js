@@ -70,17 +70,23 @@ let radarChart = new Chart(ctx, {
     options: {
         scale: {
             r: {
-                pointLabels: {
-                    font: {
-                        weight: 'bold'
-                    }
-                },
                 suggestedMin: 0,
                 suggestedMax: 100
             }
         },
         scales: {
             r: {
+                angleLines: {
+                    color: 'gray'
+                },
+                grid: {
+                    color: 'gray'
+                },
+                pointLabels: {
+                    font: {
+                        size: 14
+                    }
+                },
                 ticks: {
                     // Callback function to customize tick labels
                     callback: function(value, index, values) {
