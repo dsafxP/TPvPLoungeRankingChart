@@ -19,17 +19,73 @@ const colorInput = document.getElementById("colorSelector");
 const transparencyInput = document.getElementById("transparency");
 
 const getGrade = (score) => {
-  if (score >= 100) return "A+";
-  if (score >= 90) return "A";
-  if (score >= 80) return "A-";
-  if (score >= 70) return "B+";
-  if (score >= 60) return "B";
-  if (score >= 50) return "B-";
-  if (score >= 40) return "C+";
-  if (score >= 30) return "C";
-  if (score >= 20) return "C-";
-  
-  return "D+";
+    if (score >= 100) return "A+";
+    if (score >= 90) return "A";
+    if (score >= 80) return "A-";
+    if (score >= 70) return "B+";
+    if (score >= 60) return "B";
+    if (score >= 50) return "B-";
+    if (score >= 40) return "C+";
+    if (score >= 30) return "C";
+    if (score >= 20) return "C-";
+
+    return "D+";
+};
+
+const fillPlugin = {
+    id: 'customCanvasBackgroundColor',
+    beforeDraw: (chart, args, options) => {
+        const {
+            ctx
+        } = chart;
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = options.color || '#99ffff';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+    }
+};
+
+const config = {
+    scale: {
+        r: {
+            suggestedMin: 0,
+            suggestedMax: 100
+        }
+    },
+    scales: {
+        r: {
+            angleLines: {
+                color: 'gray'
+            },
+            grid: {
+                color: 'gray'
+            },
+            pointLabels: {
+                font: {
+                    size: 14
+                }
+            },
+            ticks: {
+                // Callback function to customize tick labels
+                callback: function(value, index, values) {
+                    return `${value} ${getGrade(value)}`;
+                }
+            }
+        }
+    },
+    plugins: {
+        customCanvasBackgroundColor: {
+            color: 'white',
+        },
+        tooltip: {
+            callbacks: {
+                afterLabel: function(context) {
+                    return `Grading: ${getGrade(context.formattedValue)}`;
+                }
+            }
+        }
+    }
 };
 
 // Initialize the radar chart
@@ -67,44 +123,8 @@ let radarChart = new Chart(ctx, {
             borderWidth: 2,
         }]
     },
-    options: {
-        scale: {
-            r: {
-                suggestedMin: 0,
-                suggestedMax: 100
-            }
-        },
-        scales: {
-            r: {
-                angleLines: {
-                    color: 'gray'
-                },
-                grid: {
-                    color: 'gray'
-                },
-                pointLabels: {
-                    font: {
-                        size: 14
-                    }
-                },
-                ticks: {
-                    // Callback function to customize tick labels
-                    callback: function(value, index, values) {
-                        return `${value} ${getGrade(value)}`; 
-                    }
-                }
-            }
-        },
-        plugins: {
-            tooltip: {
-                callbacks: {
-                    afterLabel: function(context) {
-                        return `Grading: ${getGrade(context.formattedValue)}`;
-                    }
-                }
-            }
-        }
-    }
+    options: config,
+    plugins: [fillPlugin]
 });
 
 function updateChart() {
