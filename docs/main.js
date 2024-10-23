@@ -56,18 +56,22 @@ const config = {
     scales: {
         r: {
             angleLines: {
-                color: 'gray'
+                color: 'black'
             },
             grid: {
-                color: 'gray'
+                color: 'black'
             },
             pointLabels: {
+                color: 'black',
                 font: {
-                    size: 14
+                    size: 20
                 }
             },
             ticks: {
-                // Callback function to customize tick labels
+                color: 'black',
+                font: {
+                    size: 18
+                },
                 callback: function(value, index, values) {
                     return `${value} ${getGrade(value)}`;
                 }
@@ -94,9 +98,9 @@ let radarChart = new Chart(ctx, {
     data: {
         labels: [
             'Aim & Tracking',
-            'Swapping & Reflexes',
-            'Movement & Positioning',
-            'Knowledge & Game Sense',
+            ['Swapping &', 'Reflexes'],
+            ['Movement &', 'Positioning'],
+            ['Knowledge &', 'Game Sense'],
             'Consistency',
             'Long Range',
             'Mid Range',
