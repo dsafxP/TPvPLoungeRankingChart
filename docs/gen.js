@@ -96,7 +96,7 @@ let radarChart = new Chart(ctx, {
             'Aim & Tracking',
             'Swapping & Reflexes',
             'Movement & Positioning',
-            'Game Sense',
+            'Knowledge & Game Sense',
             'Consistency',
             'Long Range',
             'Mid Range',
