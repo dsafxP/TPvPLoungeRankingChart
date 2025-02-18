@@ -15,6 +15,8 @@ const sliders = {
     defense: document.getElementById("defense")
 };
 
+const total = document.getElementById("total");
+
 const colorInput = document.getElementById("colorSelector");
 const transparencyInput = document.getElementById("transparency");
 
@@ -158,6 +160,10 @@ function updateChart() {
 
     // Redraw the chart
     radarChart.update();
+    
+    const totalSum = dataValues.reduce((acc, value) => acc + Number(value), 0);
+    
+    total.textContent = `Total: ${getGrade(totalSum / 10)} (${totalSum})`;
 }
 
 function generateShareUrl() {
