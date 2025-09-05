@@ -21,17 +21,17 @@ const colorInput = document.getElementById("colorSelector");
 const transparencyInput = document.getElementById("transparency");
 
 const getGrade = (score) => {
-    if (score >= 100) return "A+";
-    if (score >= 90) return "A";
-    if (score >= 80) return "A-";
-    if (score >= 70) return "B+";
-    if (score >= 60) return "B";
-    if (score >= 50) return "B-";
-    if (score >= 40) return "C+";
-    if (score >= 30) return "C";
-    if (score >= 20) return "C-";
+    if (score >= 100) return "S";
+    if (score >= 90) return "A+";
+    if (score >= 80) return "A";
+    if (score >= 70) return "A-";
+    if (score >= 60) return "B+";
+    if (score >= 50) return "B";
+    if (score >= 40) return "B-";
+    if (score >= 30) return "C+";
+    if (score >= 20) return "C";
 
-    return "D+";
+    return "C-";
 };
 
 const fillPlugin = {
