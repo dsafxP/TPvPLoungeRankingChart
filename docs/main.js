@@ -166,6 +166,42 @@ function updateChart() {
     total.textContent = `Total: ${getGrade(totalSum / 10)} (${totalSum})`;
 }
 
+function getShareTemplate() {
+    // Get values from the sliders
+    const dataValues = [
+        sliders.aimTracking.value,
+        sliders.swappingReflexes.value,
+        sliders.movementPositioning.value,
+        sliders.gameSense.value,
+        sliders.consistency.value,
+        sliders.longRange.value,
+        sliders.midRange.value,
+        sliders.closeRange.value,
+        sliders.aggression.value,
+        sliders.defense.value
+    ];
+
+    const totalSum = dataValues.reduce((acc, value) => acc + Number(value), 0);
+
+    return `
+## Performance
+- **Fundamentals:**
+  - **Aim & tracking:** ${getGrade(dataValues[0])} (${dataValues[0]})
+  - **Swapping & reflexes:** ${getGrade(dataValues[1])} (${dataValues[1]})
+  - **Movement & positioning:** ${getGrade(dataValues[2])} (${dataValues[2]})
+  - **Knowledge & Game Sense:** ${getGrade(dataValues[3])} (${dataValues[3]})
+  - **Consistency:** ${getGrade(dataValues[4])} (${dataValues[4]})
+- **Engagement:**
+  - **Long Range:** ${getGrade(dataValues[5])} (${dataValues[5]})
+  - **Mid Range:** ${getGrade(dataValues[6])} (${dataValues[6]})
+  - **Close Range:** ${getGrade(dataValues[7])} (${dataValues[7]})
+  - **Aggression:** ${getGrade(dataValues[8])} (${dataValues[8]})
+  - **Defense:** ${getGrade(dataValues[9])} (${dataValues[9]})
+## Result
+- **Final:** ${getGrade(totalSum / 10)} (${totalSum})
+- [Chart link](${generateShareUrl()})`;
+}
+
 function generateShareUrl() {
     const params = new URLSearchParams();
 
@@ -219,7 +255,7 @@ function resetChart() {
 
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(function() {
-        alert('URL copied to clipboard!');
+        alert('Copied to clipboard!');
     }, function(err) {
         console.error('Failed to copy: ', err);
     });
